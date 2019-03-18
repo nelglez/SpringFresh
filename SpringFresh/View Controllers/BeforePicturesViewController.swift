@@ -22,12 +22,12 @@ class BeforePicturesViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
 
        notesTextField.delegate = self
-        notesTextField.text = "Notes:"
+        notesTextField.text = "Notes:..."
       
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if notesTextField.text == "Notes:" {
+        if notesTextField.text == "Notes:..." {
             notesTextField.text = nil
             notesTextField.textColor = UIColor.black
         }
@@ -36,7 +36,7 @@ class BeforePicturesViewController: UIViewController, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if notesTextField.text == nil {
-            notesTextField.text = "Notes:"
+            notesTextField.text = "Notes:..."
         }
     }
     
@@ -52,14 +52,28 @@ class BeforePicturesViewController: UIViewController, UITextViewDelegate {
         return true
     }
     
+    func alert() {
+        let alert = UIAlertController(title: "Warning!", message: "Please go back and add a few notes.", preferredStyle: .alert)
+        
+        let imagePostAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(imagePostAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     @IBAction func addPictureButtonPressed(_ sender: UIButton) {
         presentPicker()
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
-        
+        guard let text = notesTextField.text, !text.isEmpty else {return}
+        if text == "Notes:..." {
+            alert()
+        } else {
         imageView1.image = nil
-        notesTextField.text = nil
+        notesTextField.textColor = .lightGray
+        notesTextField.text = "Notes:..."
+        }
     }
 }

@@ -67,8 +67,7 @@ extension BeforePicturesViewController: UIImagePickerControllerDelegate, UINavig
           
            imageView1.image = imageSelected
            
-        }
-        if let imageSelectedOriginal = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        } else if let imageSelectedOriginal = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             image = imageSelectedOriginal
             imageView1.image = imageSelectedOriginal
             
