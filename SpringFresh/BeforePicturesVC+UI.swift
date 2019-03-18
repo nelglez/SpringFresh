@@ -48,7 +48,7 @@ extension BeforePicturesViewController {
             self.camera()
         }))
         
-        actionSheet.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { (alert:UIAlertAction!) -> Void in
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (alert:UIAlertAction!) -> Void in
             self.photoLibrary()
         }))
         
