@@ -37,8 +37,11 @@ class InvoiceTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var totalSubTotalTextLabel: UILabel!
     @IBOutlet weak var totalTotalLabel: UILabel!
     @IBOutlet weak var totalReturnsTextField: UITextField!
+    @IBOutlet weak var storeNumberTextField: UITextField!
     
     @IBOutlet weak var submitButton: UIButton!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +71,7 @@ class InvoiceTableViewController: UITableViewController, UITextFieldDelegate {
         self.spingFreshBouquetQuantityTextField.inputAccessoryView = doneToolbar
         self.springFreshBouquetTotalTextField.inputAccessoryView = doneToolbar
         self.crazyAboutYouQuantityTextField.inputAccessoryView = doneToolbar
-        self.crazyDaisyTotalTextField.inputAccessoryView = doneToolbar
+        self.crazyAboutYourTotalTextField.inputAccessoryView = doneToolbar
         self.abstractVasesQuantityTextField.inputAccessoryView = doneToolbar
         self.abstractVasesTotalTextField.inputAccessoryView = doneToolbar
         self.medFloralBasketsQuantityTextField.inputAccessoryView = doneToolbar
@@ -119,11 +122,6 @@ class InvoiceTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     
-    
-    
-
-
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         updateTotals()
     }
@@ -133,39 +131,129 @@ class InvoiceTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
     private func updateTotals() {
-        print("Updated!")
-        var total: Int = 0
+       
+        var items:[Products] = []
+        
+        var sum: Double = 0.00
+        var quantity: Int = 0
     
-        if let consumerBunchQuantity = consumerBunchQuantityTextField.text,!consumerBunchQuantity.isEmpty {
+        if let consumerBunchQuantity = consumerBunchQuantityTextField.text,!consumerBunchQuantity.isEmpty, let consumerBunchTotal = consumerBunchTotalTextField.text, !consumerBunchTotal.isEmpty {
             
-            total += Int(consumerBunchQuantity)!
-        }
-        if let crazyDaisy = crazyDaisyQuantityTextField.text, !crazyDaisy.isEmpty {
-            total += Int(crazyDaisy)!
-        }
-        if let designerBouquet = designerBouquetQuantityTextField.text, !designerBouquet.isEmpty {
-            total += Int(designerBouquet)!
-        }
-        if let springFresh = spingFreshBouquetQuantityTextField.text, !springFresh.isEmpty {
-            total += Int(springFresh)!
-        }
-        if let crazyAboutYout = crazyAboutYouQuantityTextField.text, !crazyAboutYout.isEmpty {
-            total += Int(crazyAboutYout)!
-        }
-        if let vases = abstractVasesQuantityTextField.text, !vases.isEmpty {
-            total += Int(vases)!
-        }
-        if let baskets = medFloralBasketsQuantityTextField.text, !baskets.isEmpty {
-            total += Int(baskets)!
-        }
-        if let assortedBouquets = assortedBouquetQuantityTextField.text, !assortedBouquets.isEmpty {
-            total += Int(assortedBouquets)!
+            guard let consumerQuantityTotal = Int(consumerBunchQuantity), let bunchTotal = Double(consumerBunchTotal) else {return}
+            
+    
+            let consumer = Products(quantity: consumerQuantityTotal, amount: bunchTotal)
+            
+            items.append(consumer)
+            print(items.map({$0.cost}))
         }
 
+        if let crazyDaisy = crazyDaisyQuantityTextField.text, !crazyDaisy.isEmpty, let crazyDaisyTotal = crazyDaisyTotalTextField.text, !crazyDaisyTotal.isEmpty {
+           
+            guard let crazyDaisyQuantity = Int(crazyDaisy), let crazyDaisyBunchTotal = Double(crazyDaisyTotal) else {return}
+            
+            
+            let crazyDaisy = Products(quantity: crazyDaisyQuantity, amount: crazyDaisyBunchTotal)
+            
+            items.append(crazyDaisy)
+            print(items.map({$0.cost}))
+            
+        }
+        if let designerBouquet = designerBouquetQuantityTextField.text, !designerBouquet.isEmpty, let designerBouquetTotal = designerBouquetTotalTextField.text, !designerBouquetTotal.isEmpty {
+
+            guard let designerBouquetQuantity = Int(designerBouquet), let desginerBouquetTotal = Double(designerBouquetTotal) else {return}
+
+            let designerBouquet = Products(quantity: designerBouquetQuantity, amount: desginerBouquetTotal)
+            
+            items.append(designerBouquet)
+
+            print(items.map({$0.cost}))
+        }
+        if let springFresh = spingFreshBouquetQuantityTextField.text, !springFresh.isEmpty, let springFreshTotal = springFreshBouquetTotalTextField.text, !springFreshTotal.isEmpty {
+
+            guard let springFreshQuantity = Int(springFresh), let springFreshTotal = Double(springFreshTotal) else {return}
+
+            let springFresh = Products(quantity: springFreshQuantity, amount: springFreshTotal)
+            
+            items.append(springFresh)
+            print(items.map({$0.cost}))
+
+        }
+        if let crazyAboutYou = crazyAboutYouQuantityTextField.text, !crazyAboutYou.isEmpty, let crazyAboutYouTotal = crazyAboutYourTotalTextField.text, !crazyAboutYouTotal.isEmpty {
+
+            guard let crazyAboutYouQuantity = Int(crazyAboutYou), let crazyAboutYouTotal = Double(crazyAboutYouTotal) else {return}
+
+            let crazyAboutYou = Products(quantity: crazyAboutYouQuantity, amount: crazyAboutYouTotal)
+            
+            items.append(crazyAboutYou)
+            print(items.map({$0.cost}))
+        }
+        if let vases = abstractVasesQuantityTextField.text, !vases.isEmpty, let vasesTotal = abstractVasesTotalTextField.text, !vasesTotal.isEmpty {
+
+            guard let vasesQuantity = Int(vases), let vasesTotal = Double(vasesTotal) else {return}
+
+            let vases = Products(quantity: vasesQuantity, amount: vasesTotal)
+            
+            items.append(vases)
+            print(items.map({$0.cost}))
+        }
+        if let baskets = medFloralBasketsQuantityTextField.text, !baskets.isEmpty, let basketsTotal = medFloralBasketsTotalTextField.text, !basketsTotal.isEmpty {
+
+            guard let basketsQuantity = Int(baskets), let basketsTotal = Double(basketsTotal) else {return}
+
+            let baskets = Products(quantity: basketsQuantity, amount: basketsTotal)
+            
+            items.append(baskets)
+            print(items.map({$0.cost}))
+
+        }
+        if let assortedBouquets = assortedBouquetQuantityTextField.text, !assortedBouquets.isEmpty, let assortedBouquetsTotal = assortedBouquetTotalTextField.text, !assortedBouquetsTotal.isEmpty {
+
+            guard let assortedBouquetsQuantity = Int(assortedBouquets), let assortedBouquetsTotal = Double(assortedBouquetsTotal) else {return}
+
+            let assortedBouquets = Products(quantity: assortedBouquetsQuantity, amount: assortedBouquetsTotal)
+            
+            items.append(assortedBouquets)
+            print(items.map({$0.cost}))
+        }
         
-        totalQuanityTextLabel.text = "\(total)"
+        let newTotal = items.map({$0.cost})
+        let newQuantity = items.map({$0.quantity})
+        
+        for i in newTotal {
+            
+            sum += i
+        }
+        
+        for i in newQuantity {
+            quantity += i
+        }
+        
+        totalQuanityTextLabel.text = "\(quantity)"
+        totalTotalLabel.text = "\(sum.dollarString)"
+        
     }
     
+   
+   
+    
+//    func updateTotals(consumerBunchQuantity: String, consumerBunchTotal: String, crazyDaisyQuantity: String, crazyDaisyTotal: String) {
+//
+//        guard let consumerQuantity = Int(consumerBunchQuantity) else { return }
+//        guard let consumerAmount = Double(consumerBunchTotal) else { return }
+//
+//        guard let crazyDaisyQuantity = Int(crazyDaisyQuantity) else { return }
+//        guard let crazyDaisyAmount = Double(crazyDaisyTotal) else { return }
+//
+//        let consumer = Products(quantity: consumerQuantity, amount: consumerAmount)
+//        let crazyDaisy = Products(quantity: crazyDaisyQuantity, amount: crazyDaisyAmount)
+//
+//        let items = [consumer, crazyDaisy]
+//
+//        let numberOfItems = items.reduce(0) { $0 + $1.amount }
+//        let totalCost = items.reduce(0) { $0 + $1.cost }
+//
+//    }
 
 
     /*
@@ -181,5 +269,20 @@ class InvoiceTableViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func submitButtonPressed(_ sender: UIButton) {
         
         
+    }
+    
+    
+    private func saveData() {
+        
+    }
+    
+}
+
+
+
+
+extension Double {
+    var dollarString:String {
+        return String(format: "%.2f", self)
     }
 }
