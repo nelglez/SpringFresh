@@ -63,15 +63,15 @@ extension BeforePicturesViewController {
 extension BeforePicturesViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let imageSelected = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            image = imageSelected
-          
+            
+           image = imageSelected
            imageView1.image = imageSelected
            
         } else if let imageSelectedOriginal = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            
             image = imageSelectedOriginal
             imageView1.image = imageSelectedOriginal
             
-           
         }
         picker.dismiss(animated: true, completion: nil)
     }

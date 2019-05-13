@@ -13,10 +13,11 @@ class BeforePicturesViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var notesTextField: UITextView!
     
-    var image: UIImage? = nil
+    var image: UIImage?
     var currentVC: UIViewController!
-    
-    
+   
+    var notesArray: [String]? = []
+    var imagesArray: [UIImage]? = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,13 +68,21 @@ class BeforePicturesViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
-        guard let text = notesTextField.text, !text.isEmpty else {return}
+        guard let text = notesTextField.text, !text.isEmpty, let images = image else {return}
         if text == "Notes:..." {
             alert()
         } else {
+            imagesArray?.append(images)
+            notesArray?.append(text)
+            
+            guard let imageCount = imagesArray?.count, let notesCount = notesArray?.count else {return}
+            print(imageCount)
+            print(notesCount)
         imageView1.image = nil
         notesTextField.textColor = .lightGray
         notesTextField.text = "Notes:..."
         }
+        
     }
+    
 }
